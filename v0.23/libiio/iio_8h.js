@@ -5,6 +5,7 @@ var iio_8h =
     [ "__cnst", "iio_8h.html#a6e22df008ac7ee05d4374b71448d3bba", null ],
     [ "__notused", "iio_8h.html#a0daae40513642ad8c8beb3ca55354784", null ],
     [ "__pure", "iio_8h.html#ab8d4aa7e9ca368db7220dc9747189f1c", null ],
+    [ "_IIO_TYPES_H_", "iio_8h.html#ab401ded8f122fd38316f2c12b0790393", null ],
     [ "iio_chan_type", "iio_8h.html#a29714c3a5add6b599e29be0485ca548b", [
       [ "IIO_VOLTAGE", "iio_8h.html#a29714c3a5add6b599e29be0485ca548bada64c3d85274bb6f761921546ffbf44c", null ],
       [ "IIO_CURRENT", "iio_8h.html#a29714c3a5add6b599e29be0485ca548ba3d5a113859d9fd998e86638ee9c51486", null ],
@@ -42,6 +43,20 @@ var iio_8h =
       [ "IIO_PHASE", "iio_8h.html#a29714c3a5add6b599e29be0485ca548bae10d6e248f958b98926225a7129d00ff", null ],
       [ "IIO_MASSCONCENTRATION", "iio_8h.html#a29714c3a5add6b599e29be0485ca548ba53f06904ac9198c8bb6bcaed88e1a803", null ],
       [ "IIO_CHAN_TYPE_UNKNOWN", "iio_8h.html#a29714c3a5add6b599e29be0485ca548ba7cf34ca703a2c5b7e35f6352878fb79a", null ]
+    ] ],
+    [ "iio_event_direction", "iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5", [
+      [ "IIO_EV_DIR_EITHER", "iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5a80b08169615bd1b97b5c5b4e96eb236d", null ],
+      [ "IIO_EV_DIR_RISING", "iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5a89837f081ac01e02d6ffeafcafcfd991", null ],
+      [ "IIO_EV_DIR_FALLING", "iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5ae096a7091661033528807767030db614", null ],
+      [ "IIO_EV_DIR_NONE", "iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5a07d4f9bc4ecfa57deba56982ac247453", null ]
+    ] ],
+    [ "iio_event_type", "iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2b", [
+      [ "IIO_EV_TYPE_THRESH", "iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2ba97cd1e9ef3244dda28369981fae353ff", null ],
+      [ "IIO_EV_TYPE_MAG", "iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2ba440442f677f8303805e897e85585b6ca", null ],
+      [ "IIO_EV_TYPE_ROC", "iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2ba0e02cdfb74a5211742224e1006045a3f", null ],
+      [ "IIO_EV_TYPE_THRESH_ADAPTIVE", "iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2baf141c774c3b2535b4676018d7f7bb6d4", null ],
+      [ "IIO_EV_TYPE_MAG_ADAPTIVE", "iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2ba45d8240f4e6a514f68af5fdac372a546", null ],
+      [ "IIO_EV_TYPE_CHANGE", "iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2ba05373ad451bdf12b9a7f61f95928cfc7", null ]
     ] ],
     [ "iio_modifier", "iio_8h.html#a944ad22f426e09cdbb493081a05472e5", [
       [ "IIO_NO_MOD", "iio_8h.html#a944ad22f426e09cdbb493081a05472e5abb2252736b4c8db2ad9d6370b2f0a374", null ],

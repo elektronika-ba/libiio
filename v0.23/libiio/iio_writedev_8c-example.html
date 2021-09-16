@@ -113,6 +113,7 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line"><span class="preprocessor">#include &lt;errno.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;getopt.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="iio_8h.html">iio.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;inttypes.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;signal.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div>
@@ -132,6 +133,7 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#define SAMPLES_PER_READ 256</span></div>
 <div class="line"><span class="preprocessor">#define DEFAULT_FREQ_HZ  100</span></div>
+<div class="line"><span class="preprocessor">#define REFILL_PER_BENCHMARK 10</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct </span>option options[] = {</div>
 <div class="line">      {<span class="stringliteral">&quot;trigger&quot;</span>, required_argument, 0, <span class="charliteral">&#39;t&#39;</span>},</div>
@@ -139,6 +141,7 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">      {<span class="stringliteral">&quot;samples&quot;</span>, required_argument, 0, <span class="charliteral">&#39;s&#39;</span> },</div>
 <div class="line">      {<span class="stringliteral">&quot;auto&quot;</span>, no_argument, 0, <span class="charliteral">&#39;a&#39;</span>},</div>
 <div class="line">      {<span class="stringliteral">&quot;cyclic&quot;</span>, no_argument, 0, <span class="charliteral">&#39;c&#39;</span>},</div>
+<div class="line">      {<span class="stringliteral">&quot;benchmark&quot;</span>, no_argument, 0, <span class="charliteral">&#39;B&#39;</span>},</div>
 <div class="line">      {0, 0, 0, 0},</div>
 <div class="line">};</div>
 <div class="line"> </div>
@@ -151,6 +154,8 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">    <span class="stringliteral">&quot;Number of samples to write, 0 = infinite. Default is 0.&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;Scan for available contexts and if only one is available use it.&quot;</span>,</div>
 <div class="line">    <span class="stringliteral">&quot;Use cyclic buffer mode.&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;Benchmark throughput.&quot;</span></div>
+<div class="line">        <span class="stringliteral">&quot;\n\t\t\tStatistics will be printed on the standard input.&quot;</span>,</div>
 <div class="line">};</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keyword">struct </span><a name="_a0"></a><a class="code" href="structiio__context.html">iio_context</a> *ctx;</div>
@@ -286,7 +291,7 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">    <span class="keywordflow">return</span> (ssize_t) nb;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#define MY_OPTS &quot;t:b:s:T:ac&quot;</span></div>
+<div class="line"><span class="preprocessor">#define MY_OPTS &quot;t:b:s:T:acB&quot;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)</div>
 <div class="line">{</div>
@@ -297,9 +302,10 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">    <span class="keywordtype">int</span> c;</div>
 <div class="line">    <span class="keyword">struct </span><a name="_a4"></a><a class="code" href="structiio__device.html">iio_device</a> *dev;</div>
 <div class="line">    ssize_t sample_size;</div>
-<div class="line">    <span class="keywordtype">bool</span> cyclic_buffer = <span class="keyword">false</span>;</div>
+<div class="line">    <span class="keywordtype">bool</span> mib, cyclic_buffer = <span class="keyword">false</span>, benchmark = <span class="keyword">false</span>;</div>
 <div class="line">    ssize_t ret;</div>
 <div class="line">    <span class="keyword">struct </span>option *opts;</div>
+<div class="line">    uint64_t before, after, rate, total;</div>
 <div class="line"> </div>
 <div class="line">    argw = dup_argv(MY_NAME, argc, argv);</div>
 <div class="line"> </div>
@@ -339,6 +345,9 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">            }</div>
 <div class="line">            buffer_size = sanitize_clamp(<span class="stringliteral">&quot;buffer size&quot;</span>, optarg, 1, SIZE_MAX);</div>
 <div class="line">            <span class="keywordflow">break</span>;</div>
+<div class="line">        <span class="keywordflow">case</span> <span class="charliteral">&#39;B&#39;</span>:</div>
+<div class="line">            benchmark = <span class="keyword">true</span>;</div>
+<div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">        <span class="keywordflow">case</span> <span class="charliteral">&#39;s&#39;</span>:</div>
 <div class="line">            <span class="keywordflow">if</span> (!optarg) {</div>
 <div class="line">                fprintf(stderr, <span class="stringliteral">&quot;Number of samples requires argument\n&quot;</span>);</div>
@@ -365,12 +374,18 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">    <span class="keywordflow">if</span> (!ctx)</div>
 <div class="line">        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
 <div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (benchmark &amp;&amp; cyclic_buffer) {</div>
+<div class="line">        fprintf(stderr, <span class="stringliteral">&quot;Cannot benchmark in cyclic mode.\n&quot;</span>);</div>
+<div class="line">        <a name="a5"></a><a class="code" href="group__Context.html#ga75de8dae515c539818e52b408830d3ba">iio_context_destroy</a>(ctx);</div>
+<div class="line">        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
 <div class="line">    setup_sig_handler();</div>
 <div class="line"> </div>
-<div class="line">    dev = <a name="a5"></a><a class="code" href="group__Context.html#gade1dadfb5bc3c3b236add67f803c50c3">iio_context_find_device</a>(ctx, argw[optind]);</div>
+<div class="line">    dev = <a name="a6"></a><a class="code" href="group__Context.html#gade1dadfb5bc3c3b236add67f803c50c3">iio_context_find_device</a>(ctx, argw[optind]);</div>
 <div class="line">    <span class="keywordflow">if</span> (!dev) {</div>
 <div class="line">        fprintf(stderr, <span class="stringliteral">&quot;Device %s not found\n&quot;</span>, argw[optind]);</div>
-<div class="line">        <a name="a6"></a><a class="code" href="group__Context.html#ga75de8dae515c539818e52b408830d3ba">iio_context_destroy</a>(ctx);</div>
+<div class="line">        <a class="code" href="group__Context.html#ga75de8dae515c539818e52b408830d3ba">iio_context_destroy</a>(ctx);</div>
 <div class="line">        <span class="keywordflow">return</span> EXIT_FAILURE;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
@@ -471,10 +486,12 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">    _setmode(_fileno( stdin ), _O_BINARY);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">while</span> (app_running) {</div>
-<div class="line">        <span class="comment">/* If there are only the samples we requested, we don&#39;t need to</span></div>
-<div class="line"><span class="comment">         * demux */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (<a name="a19"></a><a class="code" href="group__Buffer.html#ga5532665a8776cec1c209d6cf8d0bb409">iio_buffer_step</a>(buffer) == sample_size) {</div>
+<div class="line">    <span class="keywordflow">for</span> (i = 0, total = 0; app_running; ) {</div>
+<div class="line">        <span class="keywordflow">if</span> (benchmark) {</div>
+<div class="line">            before = get_time_us();</div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a name="a19"></a><a class="code" href="group__Buffer.html#ga5532665a8776cec1c209d6cf8d0bb409">iio_buffer_step</a>(buffer) == sample_size) {</div>
+<div class="line">            <span class="comment">/* If there are only the samples we requested, we don&#39;t</span></div>
+<div class="line"><span class="comment">             * need to demux */</span></div>
 <div class="line">            <span class="keywordtype">void</span> *start = <a name="a20"></a><a class="code" href="group__Buffer.html#ga7fdacbfda79aa5120f34ea73ae2ea5ab">iio_buffer_start</a>(buffer);</div>
 <div class="line">            <span class="keywordtype">size_t</span> write_len, len = (intptr_t) <a name="a21"></a><a class="code" href="group__Buffer.html#gab5300f917bbdfc5dafc093a60138f131">iio_buffer_end</a>(buffer)</div>
 <div class="line">                - (intptr_t) start;</div>
@@ -513,6 +530,25 @@ $(document).ready(function(){initNavTree('iio_writedev_8c-example.html',''); ini
 <div class="line">            fprintf(stderr, <span class="stringliteral">&quot;Unable to push buffer: %s\n&quot;</span>, buf);</div>
 <div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (benchmark) {</div>
+<div class="line">            after = get_time_us();</div>
+<div class="line">            rate = buffer_size * sample_size * 1000000ull / (after - before);</div>
+<div class="line"> </div>
+<div class="line">            total += rate;</div>
+<div class="line"> </div>
+<div class="line">            <span class="keywordflow">if</span> (++i == REFILL_PER_BENCHMARK) {</div>
+<div class="line">                mib = rate &gt; 1000000;</div>
+<div class="line"> </div>
+<div class="line">                fprintf(stderr, <span class="stringliteral">&quot;\33[2K\rThroughput: %&quot;</span> PRIu64 <span class="stringliteral">&quot; %ciB/s&quot;</span>,</div>
+<div class="line">                       total / (REFILL_PER_BENCHMARK * 1000 * (mib ? 1000 : 1)),</div>
+<div class="line">                       mib ? <span class="charliteral">&#39;M&#39;</span> : <span class="charliteral">&#39;K&#39;</span>);</div>
+<div class="line"> </div>
+<div class="line">                i = 0;</div>
+<div class="line">                total = 0;</div>
+<div class="line">            }</div>
+<div class="line">        }</div>
+<div class="line"> </div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">while</span>(cyclic_buffer &amp;&amp; app_running) {</div>
 <div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>

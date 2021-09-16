@@ -236,6 +236,25 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a944ad22f426e09cdbb493081a05472e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">IIO channel modifier.  <a href="iio_8h.html#a944ad22f426e09cdbb493081a05472e5">More...</a><br /></td></tr>
 <tr class="separator:a944ad22f426e09cdbb493081a05472e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1189a8c40b39015a6dd476ec89fdaa2b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2b">iio_event_type</a> { <br />
+&#160;&#160;<b>IIO_EV_TYPE_THRESH</b>, 
+<b>IIO_EV_TYPE_MAG</b>, 
+<b>IIO_EV_TYPE_ROC</b>, 
+<b>IIO_EV_TYPE_THRESH_ADAPTIVE</b>, 
+<br />
+&#160;&#160;<b>IIO_EV_TYPE_MAG_ADAPTIVE</b>, 
+<b>IIO_EV_TYPE_CHANGE</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:a1189a8c40b39015a6dd476ec89fdaa2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">IIO event type.  <a href="iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2b">More...</a><br /></td></tr>
+<tr class="separator:a1189a8c40b39015a6dd476ec89fdaa2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83cbd471cf02caf975f3b2aa2e8159a5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5">iio_event_direction</a> { <b>IIO_EV_DIR_EITHER</b>, 
+<b>IIO_EV_DIR_RISING</b>, 
+<b>IIO_EV_DIR_FALLING</b>, 
+<b>IIO_EV_DIR_NONE</b>
+ }</td></tr>
+<tr class="memdesc:a83cbd471cf02caf975f3b2aa2e8159a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">IIO event direction.  <a href="iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5">More...</a><br /></td></tr>
+<tr class="separator:a83cbd471cf02caf975f3b2aa2e8159a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -689,6 +708,40 @@ Functions</h2></td></tr>
 
 <p>IIO channel type. </p>
 <p>A IIO channel has a type specifying the type of data associated with the channel. </p>
+
+</div>
+</div>
+<a id="a83cbd471cf02caf975f3b2aa2e8159a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83cbd471cf02caf975f3b2aa2e8159a5">&#9670;&nbsp;</a></span>iio_event_direction</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="iio_8h.html#a83cbd471cf02caf975f3b2aa2e8159a5">iio_event_direction</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>IIO event direction. </p>
+<p>When applicable, this enum specifies the direction of the iio_event_type. </p>
+
+</div>
+</div>
+<a id="a1189a8c40b39015a6dd476ec89fdaa2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1189a8c40b39015a6dd476ec89fdaa2b">&#9670;&nbsp;</a></span>iio_event_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="iio_8h.html#a1189a8c40b39015a6dd476ec89fdaa2b">iio_event_type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>IIO event type. </p>
+<p>Some IIO devices can deliver events. The type of the event can be specified by one of the iio_event_type values. </p>
 
 </div>
 </div>
